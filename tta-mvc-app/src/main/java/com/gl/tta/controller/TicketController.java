@@ -28,26 +28,21 @@ public class TicketController {
 	public TicketController(TicketService ticketService) {
 		this.ticketService = ticketService;
 	}
-	
+
 	@GetMapping("/list")
 	public String listTickets(Model model) {
 		List<Ticket> tck = this.ticketService.viewAllTickets();
 		model.addAttribute("tickets", tck);
 		return "tickets/ticket-list";
 	}
-	
 
-	
 	@GetMapping("/search")
-//	 @RequestMapping(path = {"/list","/search"})
-	 public String home(Model model, String keyword) {
+	public String home(Model model, String keyword) {
 		List<Ticket> tck = this.ticketService.searchTickets(keyword);
 		model.addAttribute("tickets", tck);
-//		System.out.println("keyword : "+keyword);
+		model.addAttribute("keyword", keyword);
 		return "tickets/ticket-list";
-//		return "redirect:/tickets/list";
 	}
-
 
 	@PostMapping("/save")
 	public String saveTicket(@ModelAttribute("ticket") Ticket tck) {
@@ -61,7 +56,7 @@ public class TicketController {
 		Ticket tck = new Ticket();
 
 		model.addAttribute("TASK", "Create");
-		model.addAttribute("ticket", tck);		
+		model.addAttribute("ticket", tck);
 
 		return "tickets/ticket-form";
 	}
@@ -75,26 +70,26 @@ public class TicketController {
 	@PostMapping("/showFormForUpdate")
 	public String showFormForUpdate(@RequestParam("id") int id, Model model) {
 
-		// get the book from the service
+		// get the ticket from the service
 		Ticket tck = ticketService.findTicketById(id);
 
-		// set book as a model attribute to pre-populate the form
+		// set ticket as a model attribute to pre-populate the form
 		model.addAttribute("TASK", "Update");
 		model.addAttribute("ticket", tck);
 
 		return "tickets/ticket-form";
 	}
-	
+
 	@PostMapping("/showFormForView")
 	public String showFormForView(@RequestParam("id") int id, Model model) {
 
-		// get the book from the service
+		// get the ticket from the service
 		Ticket tck = ticketService.findTicketById(id);
 
-		// set book as a model attribute to pre-populate the form
+		// set ticket as a model attribute to pre-populate the form
 		model.addAttribute("TASK", "View");
 		model.addAttribute("ticket", tck);
-		
+
 		return "tickets/ticket-form";
 	}
 

@@ -9,16 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.gl.tta.model.Ticket;
 import com.gl.tta.repository.TicketRepostory;
-import com.gl.tta.repository.TicketSearchRepo;
 
 @Service
 public class TicketServiceImpl implements TicketService {
 
 	@Autowired
 	private TicketRepostory ticketRepo;
-
-	@Autowired
-	private TicketSearchRepo ticketSearchRepo;
 
 	@Override
 	public List<Ticket> viewAllTickets() {
@@ -28,24 +24,15 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public List<Ticket> searchTickets(String keyword) {
-
-//		return ticketSearchRepo.findAllByKeywordInTitleorShortDiscription(keyword);
-
-//		return this.ticketRepo.findByTitle(keyword);
-		
-		return this.ticketRepo.findByTitleLikeOrShortDescriptionLike(keyword,keyword);
-//		return this.ticketRepo.findAll();
-
-//		return ticketRepo.searchTicketsSQL(keyword);
+		// TODO Auto-generated method stub
+		return this.ticketRepo.findByTitleIgnoreCaseContainingOrShortDescriptionIgnoreCaseContaining(keyword, keyword);
 	}
 
 	@Override
 	public Ticket saveATicket(Ticket tck) {
 		// TODO Auto-generated method stub
-//		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
 		long millis = System.currentTimeMillis();
 		Date date = new Date(millis);
-//	    System.out.println(formatter.format(date));  
 		tck.setCreateDate(date);
 		return this.ticketRepo.save(tck);
 	}
