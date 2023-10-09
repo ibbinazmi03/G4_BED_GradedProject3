@@ -10,4 +10,4 @@ public class TtaMvcAppApplication {
 		SpringApplication.run(TtaMvcAppApplication.class, args);
 	}
 
-}
+} 
